@@ -15,7 +15,7 @@ export default class IIMHandler {
      * 创建IM连接
      * @param options 传入你建立连接时需要的配置信息，比如url
      */
-    createConnection({options}) {
+    async createConnection({options}) {
         // 作为抽象函数
     }
 
@@ -24,7 +24,7 @@ export default class IIMHandler {
      * 发送消息
      * @param content 需要发送的消息，是一个对象，如{type:'text',content:'abc'}
      */
-    sendMsg({content}) {
+    async sendMsg({content}) {
         return new Promise((resolve, reject) => {
             if (this._isLogin) {
                 return this._sendMsgImp({content, success: resolve, fail: reject});
@@ -46,7 +46,7 @@ export default class IIMHandler {
         // 作为抽象函数
     }
 
-    _sendMsgImp({content, success, fail}) {
+    async _sendMsgImp({content, success, fail}) {
         // 作为抽象函数
     }
 }

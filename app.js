@@ -9,6 +9,7 @@ App({
         return this.appIMDelegate.getIMHandlerDelegate();
     },
     onLaunch(options) {
+        wx.cloud.init();
         this.appIMDelegate = new AppIMDelegate(this);
         this.appIMDelegate.onLaunch(options);
     },

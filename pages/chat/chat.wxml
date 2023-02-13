@@ -27,4 +27,3 @@
         bind:extraItemClickEvent="onExtraItemClickEvent"
         bind:voiceRecordEvent="onVoiceRecordEvent"
         bind:sendMessageEvent="onSendMessageEvent"></chat-input>
-<!--<template is="chat-input" data="{{inputObj,textMessage,showVoicePart:true}}"/>-->

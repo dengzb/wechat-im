@@ -1,0 +1,45 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'run', 'server' ]
+2 info using npm@3.5.2
+3 info using node@v4.2.6
+4 verbose run-script [ 'preserver', 'server', 'postserver' ]
+5 info lifecycle wechat-im@1.0.0~preserver: wechat-im@1.0.0
+6 silly lifecycle wechat-im@1.0.0~preserver: no script for preserver, continuing
+7 info lifecycle wechat-im@1.0.0~server: wechat-im@1.0.0
+8 verbose lifecycle wechat-im@1.0.0~server: unsafe-perm in lifecycle true
+9 verbose lifecycle wechat-im@1.0.0~server: PATH: /usr/share/npm/bin/node-gyp-bin:/mnt/c/Users/vogon/Documents/bash/git/wechat-im/node_modules/.bin:/home/dylan/bin:/home/dylan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/ProgramData/Oracle/Java/javapath:/mnt/c/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v8.0/bin:/mnt/c/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v8.0/libnvvp:/mnt/c/Program Files/Python36/Scripts/:/mnt/c/Program Files/Python36/:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Program Files (x86)/PharosSystems/Core:/mnt/c/Users/vogon/softwares/matlab2018a/bin:/mnt/c/Users/vogon/software/matlab/runtime/win64:/mnt/c/Users/vogon/software/matlab/bin:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/Users/vogon/softwares/node/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Android:/mnt/c/Program Files/PuTTY/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/PostgreSQL/pg11/bin:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files (x86)/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Program Files/Intel/Intel(R) Management Engine Components/DAL:/mnt/c/Ruby25-x64/bin:/mnt/c/Program Files/Java/jdk-9.0.4/jre/bin:/mnt/c/Users/vogon/softwares/conda:/mnt/c/Users/vogon/softwares/conda/Library/mingw-w64/bin:/mnt/c/Users/vogon/softwares/conda/Library/usr/bin:/mnt/c/Users/vogon/softwares/conda/Library/bin:/mnt/c/Users/vogon/softwares/conda/Scripts:/mnt/c/Users/vogon/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/vogon/software/latex/bin/win32:/mnt/c/Users/vogon/AppData/Local/atom/bin:/mnt/c/Users/vogon/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/vogon/AppData/Roaming/npm:/mnt/c/Program Files/Python36:/mnt/c/Program Files/Python36/Scripts:/snap/bin
+10 verbose lifecycle wechat-im@1.0.0~server: CWD: /mnt/c/Users/vogon/Documents/bash/git/wechat-im
+11 silly lifecycle wechat-im@1.0.0~server: Args: [ '-c', 'node server.js' ]
+12 silly lifecycle wechat-im@1.0.0~server: Returned: code: 1  signal: null
+13 info lifecycle wechat-im@1.0.0~server: Failed to exec server script
+14 verbose stack Error: wechat-im@1.0.0 server: `node server.js`
+14 verbose stack Exit status 1
+14 verbose stack     at EventEmitter.<anonymous> (/usr/share/npm/lib/utils/lifecycle.js:232:16)
+14 verbose stack     at emitTwo (events.js:87:13)
+14 verbose stack     at EventEmitter.emit (events.js:172:7)
+14 verbose stack     at ChildProcess.<anonymous> (/usr/share/npm/lib/utils/spawn.js:24:14)
+14 verbose stack     at emitTwo (events.js:87:13)
+14 verbose stack     at ChildProcess.emit (events.js:172:7)
+14 verbose stack     at maybeClose (internal/child_process.js:821:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
+15 verbose pkgid wechat-im@1.0.0
+16 verbose cwd /mnt/c/Users/vogon/Documents/bash/git/wechat-im
+17 error Linux 4.4.0-19041-Microsoft
+18 error argv "/usr/bin/nodejs" "/usr/bin/npm" "run" "server"
+19 error node v4.2.6
+20 error npm  v3.5.2
+21 error code ELIFECYCLE
+22 error wechat-im@1.0.0 server: `node server.js`
+22 error Exit status 1
+23 error Failed at the wechat-im@1.0.0 server script 'node server.js'.
+23 error Make sure you have the latest version of node.js and npm installed.
+23 error If you do, this is most likely a problem with the wechat-im package,
+23 error not with npm itself.
+23 error Tell the author that this fails on your system:
+23 error     node server.js
+23 error You can get information on how to open an issue for this project with:
+23 error     npm bugs wechat-im
+23 error Or if that isn't available, you can get their info via:
+23 error     npm owner ls wechat-im
+23 error There is likely additional logging output above.
+24 verbose exit [ 1, true ]

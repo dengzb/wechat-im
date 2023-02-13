@@ -33,8 +33,15 @@ Page({
      */
     onLoad(options) {
 
-        const friend = JSON.parse(options.friend);
-        console.log(friend);
+        const friend = {conversationId: -1,
+        friendHeadUrl: "http://downza.img.zz314.com/edu/pc/wlgj-1008/2016-06-23/64ec0888b15773e3ba5b5f744b9df16c.jpg",
+        friendId: "user_002",
+        friendName: "大脚掌科技",
+        msgUserId: "user_002",
+        timeStr: "19:06",
+        timestamp: 1533294362000,
+        type: "text",
+        };
         this.setData({
             pageHeight: wx.getSystemInfoSync().windowHeight,
         });
@@ -133,6 +140,7 @@ Page({
     async sendMsg({content, itemIndex}) {
         try {
             const {msg} = await this.imOperator.onSimulateSendMsg({content})
+            console.log("send here");
             this.UI.updateViewWhenSendSuccess(msg, itemIndex);
             return {msg};
         } catch (e) {

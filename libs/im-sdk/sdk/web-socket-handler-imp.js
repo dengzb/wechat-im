@@ -1,13 +1,48 @@
 import IIMHandler from "../interface/i-im-handler";
 
 export default class WebSocketHandlerImp extends IIMHandler {
+  
     constructor() {
         super();
-        this._onSocketOpen();
-        this._onSocketMessage();
-        this._onSocketError();
-        this._onSocketClose();
+        this._lockReconnect = false;
+        this._connection = null;
+        this._timer = null;
+        this._limit = 0;
+        let that = this;
+        this._heartCheck = {
+          timeout: 30000,
+          timeoutObj: null,
+          serverTimeoutObj: null,
+          reset: function() {
+            clearTimeout(this.timeoutObj);
+            clearTimeout(this.serverTimeoutObj);
+            return this;
+          },
+          start() {
+            this.timeoutObj = setTimeout(()=> {
+              that._sendMsgImp({content:{type: "ping"}});
+              console.log("ping");
+              this.serverTimeoutObj = setTimeout(()=> {
+                that.closeConnection();
+              }, this.timeout);
+            }, this.timeout);
+          }
+        };
     }
+
+    reconnect() {
+      if (this._lockReconnect) return;
+      this._lockReconnect = true;
+      clearTimeout(this._timer);
+      if (this._limit <12) {
+        this._timer = setTimeout(() => {
+          this.createConnection({});
+          this._lockReconnect = false;
+        }, 5000);
+        this._limit = this._limit+1;
+      }
+    }
+    
 
     /**
      * 创建WebSocket连接
@@ -16,18 +51,26 @@ export default class WebSocketHandlerImp extends IIMHandler {
      * 如果你使用本地服务器来测试，那么这里的url需要用ws，而不是wss，因为用wss无法成功连接到本地服务器
      * @param options 建立连接时需要的配置信息，这里是传入的url，即你的服务端地址，端口号不是必需的。
      */
-    createConnection({options}) {
-        !this._isLogin && wx.connectSocket({
-            url: options.url,
-            header: {
-                'content-type': 'application/json'
+    async createConnection({options}) {
+        if (!this._isLogin) {
+          let response = await wx.cloud.connectContainer({
+            config: {
+                env: 'prod-3gfywz0q4e2479ed',
             },
-            method: 'GET'
-        });
+            service: 'express-ws', // 替换自己的服务名
+            path: '/ws'
+          });
+          this._connection = response.socketTask;
+          this._lockReconnect = false;
+          this._onSocketOpen();
+          this._onSocketMessage();
+          this._onSocketError();
+          this._onSocketClose();
+        }
     }
 
-    _sendMsgImp({content, success, fail}) {
-        wx.sendSocketMessage({
+    async _sendMsgImp({content, success, fail}) {
+        this._connection.send({
             data: JSON.stringify(content), success: () => {
                 success && success({content});
             },
@@ -42,27 +85,33 @@ export default class WebSocketHandlerImp extends IIMHandler {
      * 关闭webSocket
      */
     closeConnection() {
-        wx.closeSocket();
+        this._connection.close();
+        this._isLogin = false;
+        this._lockReconnect = true;
     }
 
     _onSocketError(cb) {
-        wx.onSocketError((res) => {
+      this._connection.onError((res) => {
             this._isLogin = false;
-            console.log('WebSocket连接打开失败，请检查！', res);
+            console.log('WebSocket连接error，重试', res);
+            this.reconnect();
         })
     }
 
     _onSocketClose(cb) {
-        wx.onSocketClose((res) => {
-            this._isLogin = false;
-            console.log('WebSocket 已关闭！', res)
-        });
+      this._connection.onClose((res) => {
+        this._isLogin = false;
+        console.log('【WEBSOCKET】链接关闭！');
+        this.reconnect();
+      });
     }
 
     _onSocketOpen() {
-        wx.onSocketOpen((res) => {
-            console.log('WebSocket连接已打开！');
-        });
+      let that = this;
+      this._connection.onOpen(function (res) {
+        console.log('【WEBSOCKET】', '链接成功！');
+        that._heartCheck.reset().start();
+      });
     }
 
     /**
@@ -73,12 +122,18 @@ export default class WebSocketHandlerImp extends IIMHandler {
      * @private
      */
     _onSocketMessage() {
-        wx.onSocketMessage((res) => {
+      let that = this;
+        this._connection.onMessage((res) => {
             let msg = JSON.parse(res.data);
+            if (msg.type === 'pong') {
+              console.log("收到pong");
+              that._heartCheck.reset().start();
+              that._limit = 0;
+              return;
+            }
             if ('login' === msg.type) {
                 this._isLogin = true;
                 getApp().globalData.userInfo = msg.userInfo;
-                getApp().globalData.friendsId = msg.friendsId;
                 if (this._msgQueue.length) {
                     let temp;
                     while (this._isLogin && !!(temp = this._msgQueue.shift())) {
