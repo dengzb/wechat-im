@@ -21,18 +21,12 @@ export default class IMOperator {
     }
 
     onSimulateReceiveMsg(cbOk) {
-        getApp().getIMHandler().sendMsg({
-            content: {
-                type: 'get-history',
-                userId: getApp().globalData.userInfo.userId,
-                friendId: this.getFriendId()
-            }
-        });
         getApp().getIMHandler().setOnReceiveMessageListener({
             listener: (msg) => {
                 if (!msg) {
                     return;
                 }
+                console.log("收到消息：", msg);
                 msg.isMy = msg.msgUserId === getApp().globalData.userInfo.userId;
                 const item = this.createNormalChatItem(msg);
                 // const item = this.createNormalChatItem({type: 'voice', content: '上传文件返回的语音文件路径', isMy: false});
